@@ -52,7 +52,6 @@ const mappings = [
     ['ڕ','رِ'],
     ['ێ','يَ'],
     ['ە', 'ة'],   // Standard Kurdish Heh (U+06D5)
-    ['ه', 'ة'],   // <--- ADD THIS: Standard Arabic Heh (U+0647) fallback
     ['ک','ك'],
     ['گ','ط'],
     ['ی','ي'],
@@ -61,6 +60,13 @@ const mappings = [
 
 function convertUnicodeToAlik(text) {
     if (!text) return '';
+    
+    // 1. Context Fix: Convert Arabic 'ه' to 'ة' only when it's acting like a Kurdish 'ە'
+    // (e.g., at the end of a word or before spaces/punctuation)
+    // This protects words starting with 'ه' like هيجریدا
+    // Updated with native RTL punctuation: ، ؟ ؛ :
+    text = text.replace(/ه(?=\s|[\-\\/\)\(\[\]\{\},\.\?!؛،؟:]|$)/g, 'ە');
+
     let result = '';
     let i = 0;
 
@@ -89,7 +95,7 @@ function convertUnicodeToAlik(text) {
             }
         }
 
-        // No match — keep original (punctuation, spaces, Latin, Arabic stays intact)
+        // No match — keep original
         if (!matched) {
             result += text[i];
             i++;
