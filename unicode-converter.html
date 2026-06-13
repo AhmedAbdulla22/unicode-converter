@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unicode to Ali-K Converter</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #1a1a2e;
+    color: #eee;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    margin-bottom: 0.3rem;
+    color: #a8d8ea;
+    letter-spacing: 0.05em;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 2rem;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .box {
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .box label {
+    display: block;
+    font-size: 0.75rem;
+    color: #a8d8ea;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  textarea {
+    width: 100%;
+    height: 160px;
+    background: #0f0f1a;
+    border: 1px solid #0f3460;
+    border-radius: 6px;
+    color: #eee;
+    font-size: 1.1rem;
+    padding: 0.75rem;
+    resize: vertical;
+    direction: rtl;
+    font-family: 'Traditional Arabic', 'Scheherazade New', serif;
+    line-height: 1.8;
+  }
+
+  textarea:focus { outline: none; border-color: #a8d8ea; }
+
+  .arrow {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #a8d8ea;
+    padding: 0.25rem 0;
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    justify-content: flex-start;
+  }
+
+  button {
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: opacity 0.2s;
+  }
+
+  button:hover { opacity: 0.85; }
+
+  .btn-copy { background: #a8d8ea; color: #1a1a2e; font-weight: 600; }
+  .btn-clear { background: #333; color: #aaa; }
+
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #a8d8ea;
+    color: #1a1a2e;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .toast.show { opacity: 1; }
+
+  .stats {
+    font-size: 0.72rem;
+    color: #555;
+    margin-top: 0.4rem;
+    text-align: left;
+    direction: ltr;
+  }
+</style>
+</head>
+<body>
+
+<h1>Unicode ➜ Ali-K Converter</h1>
+<p class="subtitle">Kurdish text converter — محوّل النص الكردي</p>
+
+<div class="container">
+  <div class="box">
+    <label>Unicode — النص الأصلي</label>
+    <textarea id="unicodeTA" placeholder="أدخل النص هنا..."></textarea>
+    <div class="stats" id="inputStats">0 characters</div>
+  </div>
+
+  <div class="arrow">↓</div>
+
+  <div class="box">
+    <label>Ali-K — النص المحوّل</label>
+    <textarea id="alikTA" placeholder="النص المحوّل يظهر هنا..." readonly></textarea>
+    <div class="actions">
+      <button class="btn-copy" onclick="copyOutput()">نسخ</button>
+      <button class="btn-clear" onclick="clearAll()">مسح</button>
+    </div>
+    <div class="stats" id="outputStats">0 characters</div>
+  </div>
+</div>
+
+<div class="toast" id="toast">تم النسخ ✓</div>
+<script src="./unicode-converter.js"></script>
+
+</body>
+</html>
